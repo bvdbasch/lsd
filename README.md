@@ -91,8 +91,24 @@ And if you want to install the latest `main` branch commit you can do so via:
 cargo install --git https://github.com/lsd-rs/lsd.git --branch main
 ```
 
-### Installing from Binaries
+### Installing with Binaries
 The [release page](https://github.com/lsd-rs/lsd/releases) includes precompiled binaries for Linux, macOS, and Windows for every release. You can also get the latest binary of the `main` branch from the [GitHub action build artifacts](https://github.com/lsd-rs/lsd/actions?query=branch%3Amain+is%3Asuccess+event%3Apush) (choose the top action and then scroll down to the artifacts section).
+
+#### Configuring your shell to use lsd instead of ls (optional)
+In order to use lsd instead of entering the `ls` command, you need to create an alias for ls in to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc...). The simplest variant of such an alias is:
+```sh
+alias ls='lsd'
+```
+The alias above will replace a stock ls command with an lsd command without additional parameters.
+
+Some examples of other useful aliases are:
+```sh
+alias l='lsd -l'
+alias la='lsd -a'
+alias lla='lsd -la'
+alias lt='lsd --tree'
+```
+
 
 ## Customizing lsd (configuration and theming)
 > [!TIP]
