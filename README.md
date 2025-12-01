@@ -94,19 +94,24 @@ cargo install --git https://github.com/lsd-rs/lsd.git --branch main
 ### Installing from Binaries
 The [release page](https://github.com/lsd-rs/lsd/releases) includes precompiled binaries for Linux, macOS, and Windows for every release. You can also get the latest binary of the `main` branch from the [GitHub action build artifacts](https://github.com/lsd-rs/lsd/actions?query=branch%3Amain+is%3Asuccess+event%3Apush) (choose the top action and then scroll down to the artifacts section).
 
-## Configuration
-`lsd` can be configured with a configuration file to set the default options.
+## Customizing lsd (configuration and theming)
+> [!TIP]
+> Hier een tip block toevoegen dat naar de samples verwijst
 
+Hier uitleggen dat je de default configuration en het uiterlijk van lsd kan aanpassen met 3 files. De drie files hoeven niet alle 3 aanwezig te zijn. Je kan samples vinden in de doc folder.
 
-Check [Config file content](#config-file-content) for details.
+Reword: `lsd` can be configured with a configuration file to set the default options.
 
-### Config file location
+Refactor: Check [Config file content](#config-file-content) for details. -> Hier een aparte file in de docs vam maken met sample configs
 
-### Non-Windows
+### File locations
+> [!TIP]
+> You can also instruct `lsd` to look for configuration files in a custom location of your choosing by using the following command: `lsd --config-file [YOUR_CUSTOM_PATH]`. This is particularly useful when testing a configuration changes before commiting to them.
 
-On non-Windows systems `lsd` follows the
-[XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-convention for the location of the configuration file. A `config.yaml` or `config.yml` file will be searched for in these locations, in order:
+#### Unix (Linux, Mac, etc...)
+On non-Windows systems `lsd` follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) convention for the location of the configuration file.
+
+reword: A `config.yaml` or `config.yml` file will be searched for in these locations, in order: -> lsd will look for files in
 
 - `$HOME/.config/lsd`
 - `$XDG_CONFIG_HOME/lsd`
@@ -114,7 +119,6 @@ convention for the location of the configuration file. A `config.yaml` or `confi
 On most systems these are mapped to the same location, which is `~/.config/lsd/config.yaml`.
 
 ### Windows
-
 On Windows systems `lsd` searches for `config.yaml` or `config.yml` in the following locations, in order:
 
 - `%USERPROFILE%\.config\lsd`
@@ -122,10 +126,6 @@ On Windows systems `lsd` searches for `config.yaml` or `config.yml` in the follo
 
 These are usually something like `C:\Users\username\AppData\Roaming\lsd\config.yaml` and `C:\Users\username\.config\lsd\config.yaml` respectively.
 
-### Custom
-
-You can also provide a configuration file from a non-standard location:
-`lsd --config-file [PATH]`
 
 ### Config file content
 
