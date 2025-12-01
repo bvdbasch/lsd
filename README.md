@@ -23,22 +23,22 @@
 
 </div>
 
-**IMPORTANT**: This is the development documents,
-please check the docs in [Tags](https://github.com/lsd-rs/lsd/tags) if you installed from the released ones.
-
-The current newest release is: [v1.2.0](https://github.com/lsd-rs/lsd/tree/v1.2.0)
-
 ---
 
-# LSD (LSDeluxe)
+> [!IMPORTANT]
+> This is the documentation for the development version of lsd.
+> Please consult the documentation on [the Tags page](https://github.com/lsd-rs/lsd/tags) if you are looking for the documentation of individual releases.
+>
+> The current newest release is: [v1.2.0](https://github.com/lsd-rs/lsd/tree/v1.2.0)
 
+# LSD (LSDeluxe)
 [![license](http://img.shields.io/badge/license-Apache%20v2-blue.svg)](https://raw.githubusercontent.com/lsd-rs/lsd/master/LICENSE)
 [![Latest version](https://img.shields.io/crates/v/lsd.svg)](https://crates.io/crates/lsd)
 [![build](https://github.com/lsd-rs/lsd/workflows/CICD/badge.svg)](https://github.com/lsd-rs/lsd/actions)
 [![codecov](https://codecov.io/gh/lsd-rs/lsd/branch/master/graph/badge.svg)](https://codecov.io/gh/lsd-rs/lsd)
 [![versions](https://img.shields.io/repology/repositories/lsd)](https://repology.org/project/lsd/versions)
 
-![image](https://raw.githubusercontent.com/lsd-rs/lsd/assets/screen_lsd.png)
+![lsd sample output](https://raw.githubusercontent.com/lsd-rs/lsd/assets/screen_lsd.png)
 
 This project is a rewrite of GNU `ls` with lots of added features like colors, icons, tree-view, more formatting options etc.
 The project is heavily inspired by the super [colorls](https://github.com/athityakumar/colorls) project.
