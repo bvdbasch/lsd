@@ -51,9 +51,9 @@ The project is heavily inspired by the super [colorls](https://github.com/athity
 1. In order for icons to work you need to have a patched font like [nerd-font](https://www.nerdfonts.com) or [font-awesome](https://fontawesome.com) installed on your machine and your terminal needs to be configured to use the patched font of your choosing.
 2. If you intend to install `lsd` from source you need to have a working Rust toolchain (obviously) on your machine.
 
-### Using a package manager
+### Installing with a package manager
 <details>
-<summary><h3>Packaging status</h3></summary>
+<summary>Packaging status</summary>
 <a href="https://repology.org/project/lsd/versions">
     <img src="https://repology.org/badge/vertical-allrepos/lsd.svg?columns=3" alt="Packaging status">
 </a>
@@ -91,7 +91,7 @@ And if you want to install the latest `main` branch commit you can do so via:
 cargo install --git https://github.com/lsd-rs/lsd.git --branch main
 ```
 
-### Installing with Binaries
+### Installing binaries directly
 The [release page](https://github.com/lsd-rs/lsd/releases) includes precompiled binaries for Linux, macOS, and Windows for every release. You can also get the latest binary of the `main` branch from the [GitHub action build artifacts](https://github.com/lsd-rs/lsd/actions?query=branch%3Amain+is%3Asuccess+event%3Apush) (choose the top action and then scroll down to the artifacts section).
 
 #### Configuring your shell to use lsd instead of ls (optional)
@@ -109,41 +109,80 @@ alias lla='lsd -la'
 alias lt='lsd --tree'
 ```
 
-
 ## Customizing lsd (configuration and theming)
 > [!TIP]
-> Hier een tip block toevoegen dat naar de samples verwijst
+> In order to make the customization process easier for you we’ve supplied sample files. These files contain the entries for all the defaults lsd comes with after installation making it easier. You can find the sample files in the [documentation folder](./doc) as well as a small [(non extensive) tutorial](./doc/tutorial.md) on how to make changes.
 
-Hier uitleggen dat je de default configuration en het uiterlijk van lsd kan aanpassen met 3 files. De drie files hoeven niet alle 3 aanwezig te zijn. Je kan samples vinden in de doc folder.
+In order to tailor `lsd` to your specific needs you can create any of the following three files and make adjustments as you see fit.
 
-Reword: `lsd` can be configured with a configuration file to set the default options.
+1. `config.yaml` → [config sample file here](./doc/config-sample.yaml)
+2. `colors.yaml` → [colors sample file here](./doc/colors-sample.yaml)
+3. `icons.yaml` → [icons sample file here](./doc/icons-sample.yaml)
 
-Refactor: Check [Config file content](#config-file-content) for details. -> Hier een aparte file in de docs vam maken met sample configs
+Note that it is not required to have all three of the files present in order for your configuration to be applied. For example, if you [only want to customize the icons](#customization-example) then only [`icons.yaml`]()(./doc/icons-sample.yaml) needs to be present in the [configuration directory](#config-file-locations); [`config.yaml`](./doc/config-sample.yaml), and [`colors.yaml`](./doc/colors-sample.yaml) do not have to be present in order for you icon modifications to be applied.
 
-### File locations
+### Config file locations
 > [!TIP]
 > You can also instruct `lsd` to look for configuration files in a custom location of your choosing by using the following command: `lsd --config-file [YOUR_CUSTOM_PATH]`. This is particularly useful when testing a configuration changes before commiting to them.
 
 #### Unix (Linux, Mac, etc...)
-On non-Windows systems `lsd` follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) convention for the location of the configuration file.
-
-reword: A `config.yaml` or `config.yml` file will be searched for in these locations, in order: -> lsd will look for files in
+On non-Windows systems `lsd` follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html), thus `lsd` will look for configuration files any of the following locations:
 
 - `$HOME/.config/lsd`
 - `$XDG_CONFIG_HOME/lsd`
 
-On most systems these are mapped to the same location, which is `~/.config/lsd/config.yaml`.
+On most systems these variables are mapped to the same location, which is usually `~/.config/lsd/`. If `lsd` does not detect the location, or if the location exists but does not contain any of the three configuration files, the default configuration will be used instead.
 
-### Windows
-On Windows systems `lsd` searches for `config.yaml` or `config.yml` in the following locations, in order:
+#### Windows
+On Windows systems `lsd` will look for configuration files in the following locations, **in order**:
 
-- `%USERPROFILE%\.config\lsd`
-- `%APPDATA%\lsd`
+1. `%USERPROFILE%\.config\lsd`
+2. `%APPDATA%\lsd`
 
-These are usually something like `C:\Users\username\AppData\Roaming\lsd\config.yaml` and `C:\Users\username\.config\lsd\config.yaml` respectively.
+These locations are usually something like `C:\Users\username\AppData\Roaming\lsd\`, and `C:\Users\username\.config\lsd\` respectively.
+
+### Customization example
+> [!TIP]
+> Refactor: veranderen naar sample file or look at source code here: *You can find the default set of icons [here](src/theme/icon.rs).* en in callout zetten
+
+Say you want to change some of the default icons. All you have to do is create a `icons.yaml` file in the configuration directory and set your custom icon there.
+
+There are 3 kinds of icon overrides available in `lsd`:
+
+- `name`by
+- `filetype`
+- `extension`.
+
+Both nerd font glyphs and Unicode emojis can be used for icons. The final set of icons that `lsd` will use is a combination of the [default icons](./src/theme/icon.rs) with the custom icons you’ve set in the `icons.yaml` file.
+
+A short example for each type of the icon overrides is shown below.
+
+```yaml
+name:
+  .trash: 
+  .cargo: 
+  .emacs.d: 
+  a.out: 
+extension:
+  go: 
+  hs: 
+  rs: 🦀
+filetype:
+  dir: 📂
+  file: 📄
+  pipe: 📩
+  socket: 󰆨
+  executable: 
+  symlink-dir: 
+  symlink-file: 
+  device-char: 
+  device-block: 󰜫
+  special:  
+```
 
 
-### Config file content
+
+
 
 <details open>
 <summary>This is an example config file with the default values and some additional remarks.</summary>
@@ -381,50 +420,12 @@ git-status:
 When creating a theme for `lsd`, you can specify any part of the default theme,
 and then change its colors, the items missed would fall back to use the default colors.
 
-### Icon Theme
 
-Icon theme can be configured in a fixed location, `$XDG_CONFIG_DIR/lsd/icons.yaml`,
-for example, `~/.config/lsd/icons.yaml` on macOS,
-please check [Config file location](#config-file-location) to make sure where is `$XDG_CONFIG_DIR`.
 
-As the file name indicated, the icon theme file is a `yaml` file.
 
-Check [Icon Theme file content](#icon-theme-file-content) for details.
-
-#### Icon Theme file content
-
-`lsd` support 3 kinds of icon overrides, by `name`, by `filetype` and by `extension`.
-The final set of icons used will be a combination of what is shipped with in `lsd` with overrides from config applied on top of it.
-*You can find the default set of icons [here](src/theme/icon.rs).*
-
-Both nerd font glyphs and Unicode emojis can be used for icons. You can find an example of icons customization below.
-
-```yaml
-name:
-  .trash: 
-  .cargo: 
-  .emacs.d: 
-  a.out: 
-extension:
-  go: 
-  hs: 
-  rs: 🦀
-filetype:
-  dir: 📂
-  file: 📄
-  pipe: 📩
-  socket: 󰆨
-  executable: 
-  symlink-dir: 
-  symlink-file: 
-  device-char: 
-  device-block: 󰜫
-  special: 
-```
 
 ## External Configurations
 
-### Required
 
 Enable nerd fonts for your terminal, URxvt for example in `.Xresources`:
 
@@ -432,25 +433,10 @@ Enable nerd fonts for your terminal, URxvt for example in `.Xresources`:
 URxvt*font:    xft:Hack Nerd Font:style=Regular:size=11
 ```
 
-### Optional
 
-In order to use lsd when entering the `ls` command, you need to add this to your shell
-configuration file (~/.bashrc, ~/.zshrc, etc.):
-
-```sh
-alias ls='lsd'
-```
-
-Some further examples of useful aliases:
-
-```sh
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='ls --tree'
-```
 
 ## F.A.Q
+### How to set nerd font in xresources?
 
 ### Uses unknown compression for member 'control.tar.zst' when using deb
 
