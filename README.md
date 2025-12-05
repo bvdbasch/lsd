@@ -59,7 +59,7 @@ The project is heavily inspired by the super [colorls](https://github.com/athity
 </a>
 </details>
 
-Please consult the table below for the installation command for your package manager.
+Please consult the table below for the installation command associated with your package manager.
 
 | OS/Distro                       | Command                                                                                                     |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------|
@@ -149,9 +149,9 @@ Say you want to change some of the default icons. All you have to do is create a
 
 There are 3 kinds of icon overrides available in `lsd`:
 
-- `name`by
+- `name`
 - `filetype`
-- `extension`.
+- `extension`
 
 Both nerd font glyphs and Unicode emojis can be used for icons. The final set of icons that `lsd` will use is a combination of the [default icons](./src/theme/icon.rs) with the custom icons you’ve set in the `icons.yaml` file.
 
